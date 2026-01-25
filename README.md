@@ -59,3 +59,5 @@ Stops instantly once the password is found
 ...
 
 (the base minimum for this to work is that your pc should have two cpu cores at least)
+<img width="819" height="659" alt="Untitled1" src="https://github.com/user-attachments/assets/282d5fb7-2e44-4ee6-9bd0-821f95b6ccec" /><img width="819" height="660" alt="Untitled2" src="https://github.com/user-attachments/assets/6305e298-e75f-4cda-b797-77b2f056e259" />
+
