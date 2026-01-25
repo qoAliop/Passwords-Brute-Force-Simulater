@@ -44,7 +44,7 @@ This project is made to learn cybersecurity concepts, NOT to attack real systems
 
 --Added to show why strong passwords matter
 
-# 🛠️ How It Works (High Level)
+# 🛠️ How It Works 
 
 Converts numbers into passwords using a custom charset
 
@@ -52,7 +52,10 @@ Splits the keyspace into chunks
 
 Each worker process brute-forces its own range
 
-(the base minimum for this to work is that your pc should have two cpu cores at least)
 Workers report speed back to the main UI
 
 Stops instantly once the password is found
+
+...
+
+(the base minimum for this to work is that your pc should have two cpu cores at least)
