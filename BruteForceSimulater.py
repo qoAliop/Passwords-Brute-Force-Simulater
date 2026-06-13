@@ -5,18 +5,9 @@ import time
 import string
 import math
 
-# ==========================
-# random config stuff
-# ==========================
-
 CHARSET = string.ascii_lowercase + string.ascii_uppercase + string.digits
 BASE = len(CHARSET)
-WORKERS = 2   # dont increase too much or pc cries (it depends on how powerful you cpu is + you will need to enhance the code this is the best for if your pc have only two cores)
-
-
-# ==========================
-# convert number -> password
-# ==========================
+WORKERS = 2   
 
 def num_to_password(n, length):
     chars = []
@@ -28,9 +19,6 @@ def num_to_password(n, length):
     return "".join(reversed(chars))
 
 
-# ==========================
-# worker process
-# ==========================
 
 def worker(start, end, target, length, stop_event, found_q, speed_q):
 
@@ -51,7 +39,6 @@ def worker(start, end, target, length, stop_event, found_q, speed_q):
             found_q.put(pwd)
             return
 
-        # speed update (IMPORTANT: dont touch)
         if attempts % 5000 == 0:
             now = time.perf_counter()
             elapsed = now - last_time
@@ -64,9 +51,6 @@ def worker(start, end, target, length, stop_event, found_q, speed_q):
                 last_time = now
 
 
-# ==========================
-# GUI
-# ==========================
 
 root = tk.Tk()
 root.title("Brute-Force Simulator (Educational)")
@@ -79,9 +63,6 @@ FONT_TEXT = ("Consolas", 11)
 FONT_BTN = ("Segoe UI", 11, "bold")
 
 
-# ==========================
-# TITLE
-# ==========================
 
 tk.Label(
     root,
@@ -100,9 +81,6 @@ tk.Label(
 ).pack()
 
 
-# ==========================
-# MODE SELECT
-# ==========================
 
 mode_var = tk.IntVar(value=4)
 
@@ -148,9 +126,6 @@ warning_label = tk.Label(
 warning_label.pack()
 
 
-# ==========================
-# PASSWORD INPUT
-# ==========================
 
 frame_input = tk.Frame(root, bg="#121212")
 frame_input.pack(pady=15)
@@ -180,9 +155,6 @@ password_entry = tk.Entry(
 password_entry.grid(row=0, column=1, padx=5)
 
 
-# ==========================
-# OUTPUT BOX
-# ==========================
 
 output = tk.Text(
     root,
@@ -199,10 +171,6 @@ output.insert(tk.END, "Waiting for input...\n")
 output.config(state="disabled")
 
 
-# ==========================
-# PROGRESS + STATUS
-# ==========================
-
 progress = ttk.Progressbar(root, orient="horizontal", length=650)
 progress.pack(pady=10)
 
@@ -216,9 +184,6 @@ status = tk.Label(
 status.pack()
 
 
-# ==========================
-# GLOBALS (yeah yeah)
-# ==========================
 
 processes = []
 stop_event = None
@@ -229,9 +194,6 @@ start_time = None
 total_space = 0
 
 
-# ==========================
-# START
-# ==========================
 
 def start():
     global stop_event, found_q, speed_q, start_time, total_space
@@ -286,9 +248,6 @@ def start():
     root.after(100, monitor)
 
 
-# ==========================
-# MONITOR (speed stays same)
-# ==========================
 
 def monitor():
     if stop_event.is_set():
@@ -312,7 +271,6 @@ def monitor():
     while not speed_q.empty():
         speed += speed_q.get()
 
-    # IMPORTANT: same update logic as original
     progress["value"] += speed // 10
 
     elapsed = time.time() - start_time
@@ -333,9 +291,6 @@ def monitor():
     root.after(100, monitor)
 
 
-# ==========================
-# STOP / EXIT
-# ==========================
 
 def stop():
     if stop_event:
@@ -352,10 +307,6 @@ def exit_app():
 
     root.destroy()
 
-
-# ==========================
-# BUTTONS
-# ==========================
 
 frame_buttons = tk.Frame(root, bg="#121212")
 frame_buttons.pack(pady=20)
@@ -378,10 +329,6 @@ tk.Button(
     width=16, command=exit_app
 ).grid(row=0, column=2, padx=10)
 
-
-# ==========================
-# RUN
-# ==========================
 
 if __name__ == "__main__":
     mp.freeze_support()
